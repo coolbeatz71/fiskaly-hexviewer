@@ -1,14 +1,23 @@
-import React from "react";
+import React, { FC, ReactElement, useState } from "react";
 
-interface HexViewerProps {
+interface IHexViewerProps {
   data: string | Uint8Array;
 }
 
-export default function HexViewer(props: HexViewerProps) {
-  /*
-   * This component is the main challenge. You can be wild here and change
-   * everything!
-   */
+interface ISelectedElement {
+  index: number | null;
+  offset: number | null;
+  value: number | string;
+}
+
+const HexViewer: FC<IHexViewerProps> = ({ data }) => {
+  const rows: ReactElement[] = [];
+  const [selectedElement, setSelectedElement] = useState<ISelectedElement>({
+    index: null,
+    offset: null,
+    value: "",
+  });
+
   return (
     <pre
       style={{
@@ -17,9 +26,9 @@ export default function HexViewer(props: HexViewerProps) {
         wordBreak: "break-all",
       }}
     >
-      Here comes the HexViewer
-      <br />
-      {props.data}
+      {" "}
     </pre>
   );
-}
+};
+
+export default HexViewer;
