@@ -1,4 +1,4 @@
-import React, { FC, ReactElement, useState } from "react";
+import React, { FC, ReactElement, useState, MouseEvent } from "react";
 import { BYTES_PER_ROW } from "../../constants/app";
 import convertToHEX from "../../lib/convertToHEX";
 
@@ -22,6 +22,14 @@ const HexViewer: FC<IHexViewerProps> = ({ data }) => {
     value: "",
   });
 
+  const onClickElement = (
+    index: number,
+    offset: number,
+    event: MouseEvent<HTMLSpanElement, MouseEvent>
+  ) => {
+    setSelectedElement({ index, offset, value: event.currentTarget.innerText });
+  };
+
   for (let offset = 0; offset < data.length; offset += BYTES_PER_ROW) {
     const chunks = [...data.slice(offset, offset + BYTES_PER_ROW)];
 
@@ -31,7 +39,11 @@ const HexViewer: FC<IHexViewerProps> = ({ data }) => {
           ? styles.selected
           : "";
       return (
-        <span className={`${styles.byteUnit} ${isSelected}`} key={offset + i}>
+        <span
+          key={offset + i}
+          className={`${styles.byteUnit} ${isSelected}`}
+          onClick={(e) => onClickElement(i, offset, e)}
+        >
           {convertToHEX(byte, 2)}
         </span>
       );
