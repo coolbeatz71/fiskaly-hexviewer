@@ -25,7 +25,7 @@ const HexViewer: FC<IHexViewerProps> = ({ data }) => {
   const onClickElement = (
     index: number,
     offset: number,
-    event: MouseEvent<HTMLSpanElement, MouseEvent>
+    event: MouseEvent<HTMLSpanElement, globalThis.MouseEvent>
   ) => {
     setSelectedElement({ index, offset, value: event.currentTarget.innerText });
   };
@@ -36,18 +36,83 @@ const HexViewer: FC<IHexViewerProps> = ({ data }) => {
     const bytes = chunks.map((byte, i) => {
       const isSelected =
         selectedElement.index === i && selectedElement.offset === offset
-          ? styles.selected
+          ? styles.viewer__selected
           : "";
+
       return (
         <span
           key={offset + i}
-          className={`${styles.byteUnit} ${isSelected}`}
           onClick={(e) => onClickElement(i, offset, e)}
+          className={`${styles.viewer__byteUnit} ${isSelected}`}
         >
           {convertToHEX(byte, 2)}
         </span>
       );
     });
+
+    const OffsetSection = (
+      <span className={styles.viewer__offsetLine}>
+        {convertToHEX(offset, 8)}
+      </span>
+    );
+
+    const BytesSection = (
+      <div className={styles.viewer__byteLine}>
+        {bytes.slice(0, 8)} {bytes.slice(8)}
+      </div>
+    );
+
+    const AsciiSection = (
+      <div className={styles.viewer__asciiLine}>
+        {" "}
+        {chunks.map((byte, i) => {
+          const isSelected =
+            selectedElement.index === i && selectedElement.offset === offset
+              ? styles.selected
+              : "";
+
+          if (typeof byte === "string") {
+            return (
+              <span
+                key={offset + i}
+                className={isSelected}
+                onClick={(e) => onClickElement(i, offset, e)}
+              >
+                {byte}
+              </span>
+            );
+          }
+
+          if (byte >= 0x20 && byte < 0x7f) {
+            return (
+              <span
+                key={offset + i}
+                className={isSelected}
+                onClick={(e) => onClickElement(i, offset, e)}
+              >
+                {String.fromCharCode(byte)}
+              </span>
+            );
+          }
+
+          return (
+            <span
+              key={offset + i}
+              className={isSelected}
+              onClick={(e) => onClickElement(i, offset, e)}
+            >
+              .
+            </span>
+          );
+        })}{" "}
+      </div>
+    );
+
+    rows.push(
+      <div key={offset} className={styles.viewer__viewerLine}>
+        {OffsetSection} {BytesSection} {AsciiSection}
+      </div>
+    );
   }
 
   return (
@@ -58,7 +123,8 @@ const HexViewer: FC<IHexViewerProps> = ({ data }) => {
         wordBreak: "break-all",
       }}
     >
-      {" "}
+      <span style={{ width: "100%" }}>Here comes the HexViewer</span>
+      <div className={styles.viewerBody}>{rows}</div>
     </pre>
   );
 };

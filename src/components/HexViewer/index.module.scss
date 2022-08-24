@@ -1,2 +1,44 @@
+$black: #000000;
+$warning: #f07f34;
+$dark: rgba(
+  $color: $black,
+  $alpha: 0.65,
+);
+
 .viewer {
+  margin-top: 10px;
+  padding: 10px;
+  border: 1px solid $dark;
+  border-radius: 8px;
+
+  &__selected {
+    background: $warning;
+  }
+
+  &__viewerLine {
+    display: grid;
+    grid-template-columns: 1fr 4fr 2fr;
+    margin-top: 20px;
+    padding-bottom: 5px;
+    border-bottom: 1px solid $dark;
+  }
+
+  &__byteUnit {
+    margin-right: 5px;
+    white-space: nowrap;
+  }
+
+  &__offsetLine {
+    margin-right: 20px;
+    white-space: nowrap;
+  }
+
+  &__byteLine {
+    white-space: nowrap;
+  }
+
+  &__asciiLine {
+    margin-left: 20px;
+    white-space: nowrap;
+  }
 }
