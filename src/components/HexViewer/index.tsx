@@ -16,7 +16,7 @@ import OffsetSection from "./OffsetSection";
 import styles from "./index.module.scss";
 
 export interface IHexViewerProps {
-  data: string | Uint8Array;
+  data: string | Uint8Array | Uint16Array;
 }
 
 const HexViewer: FC<IHexViewerProps> = ({ data }) => {
