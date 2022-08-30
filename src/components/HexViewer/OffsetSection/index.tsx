@@ -5,7 +5,9 @@ import styles from "./../index.module.scss";
 
 const OffsetSection: FC<{ offset: number }> = ({ offset }) => {
   return (
-    <span className={styles.viewer__offsetLine}>{convertToHEX(offset, 8)}</span>
+    <span className={styles.viewer__rows__offsetSection}>
+      {convertToHEX(offset, 8)}
+    </span>
   );
 };
 

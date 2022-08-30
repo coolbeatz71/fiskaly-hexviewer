@@ -1,4 +1,4 @@
-import React, { FC, ReactElement, useState, MouseEvent } from "react";
+import { FC, ReactNode, useState, MouseEvent } from "react";
 import { useMedia } from "react-use";
 import {
   BYTES_PER_ROW_MD,
@@ -32,7 +32,7 @@ const HexViewer: FC<IHexViewerProps> = ({ data }) => {
     ? BYTES_PER_ROW_MD
     : BYTES_PER_ROW_LG;
 
-  const rows: ReactElement[] = [];
+  const rows: ReactNode[] = [];
   const [selectedElement, setSelectedElement] = useState<ISelectedElement>({
     index: null,
     offset: null,
@@ -60,7 +60,7 @@ const HexViewer: FC<IHexViewerProps> = ({ data }) => {
         <span
           key={offset + i}
           onClick={(e) => onClickElement(i, offset, e)}
-          className={`${styles.viewer__byteUnit} ${isSelected}`}
+          className={`${styles.viewer__rows__byte} ${isSelected}`}
         >
           {convertToHEX(byte, 2)}
         </span>
@@ -68,7 +68,7 @@ const HexViewer: FC<IHexViewerProps> = ({ data }) => {
     });
 
     rows.push(
-      <div key={offset} className={styles.viewer__viewerLine}>
+      <div key={offset} className={styles.viewer__rows__line}>
         <OffsetSection offset={offset} /> <BytesSection bytes={bytes} />
         <AsciiSection
           offset={offset}
@@ -81,54 +81,19 @@ const HexViewer: FC<IHexViewerProps> = ({ data }) => {
   }
 
   return (
-    <pre
-      style={{
-        display: "flex",
-        justifyContent: "center",
-        flexWrap: "wrap",
-        overflowWrap: "break-word",
-        whiteSpace: "pre-wrap",
-        wordBreak: "break-all",
-      }}
-    >
-      <span style={{ width: "100%", textAlign: "center" }}>
-        Here comes the HexViewer
-      </span>
-      <div className={styles.viewer}>{rows}</div>
-      <div
-        style={{
-          display: "flex",
-          width: "100%",
-          marginTop: "20px",
-          justifyContent: "center",
-        }}
-      >
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            marginTop: "20px",
-            marginRight: "20px",
+    <pre className={styles.viewer}>
+      <div className={styles.viewer__rows}>{rows}</div>
+      <div className={styles.viewer__footer}>
+        <button
+          onClick={() => {
+            const value = selectedElement.value.toString();
+            copyToClipboard(value).then(() => {
+              alert(`Value copied: ${value}`);
+            });
           }}
         >
-          <span>Copy selected to clipboard</span>
-          <button
-            style={{
-              width: "100px",
-              marginTop: "10px",
-              padding: "10px",
-            }}
-            onClick={() => {
-              const value = selectedElement.value.toString();
-              copyToClipboard(value).then(() => {
-                alert(`Value copied: ${value}`);
-              });
-            }}
-          >
-            Copy
-          </button>
-        </div>
+          Copy selected to clipboard
+        </button>
       </div>
     </pre>
   );

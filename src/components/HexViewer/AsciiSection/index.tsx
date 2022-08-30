@@ -17,7 +17,7 @@ const AsciiSection: FC<IAsciiSectionProps> = ({
   offset,
 }) => {
   return (
-    <div className={styles.viewer__asciiLine}>
+    <div className={styles.viewer__rows__asciiSection}>
       {chunks.map((byte, index) => {
         const isSelected =
           selectedElement.index === index && selectedElement.offset === offset

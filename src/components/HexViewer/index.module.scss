@@ -1,58 +1,71 @@
-$dark: rgba(
-  $color: #000000,
-  $alpha: 0.2,
-);
-
-$warning: rgba(
-  $color: #f07f34,
-  $alpha: 0.5,
-);
+@import "../../styles/global.scss";
 
 .viewer {
   border: 1px solid $dark;
   border-radius: 3px;
-  padding: 0.5rem;
+  padding: 1rem;
   margin: 0.5rem;
+
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  overflow-wrap: break-word;
+  white-space: pre-wrap;
+  word-break: break-all;
+
+  button {
+    padding: 1rem;
+    color: white;
+    border: none;
+    background: $button;
+    border-radius: 8px;
+    box-shadow: 0 6px 20px -10px rgba($button, 1);
+    cursor: pointer;
+  }
 
   &__selected {
     background: $warning;
     padding: 0.2rem;
   }
 
-  &__viewerLine {
-    display: grid;
-    grid-template-columns: 1fr 4fr 2fr;
-
-    border-bottom: 1px solid $dark;
+  &__footer {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    margin-top: 1rem;
   }
 
-  &__byteUnit {
-    margin-right: 1rem;
-    white-space: nowrap;
-  }
+  &__rows {
+    margin: 0.5rem;
+    &__line {
+      display: grid;
+      grid-template-columns: 1fr 4fr 2fr;
+      border: 1px solid $dark;
+    }
 
-  &__offsetLine {
-    padding-right: 1rem;
-    padding-top: 1rem;
-    padding-bottom: 1rem;
-    margin-right: 1rem;
+    &__byte {
+      margin-right: 1rem;
+      white-space: nowrap;
+    }
 
-    white-space: nowrap;
-    border-right: 1px solid $dark;
-  }
+    &__offsetSection {
+      padding: 1rem;
+      white-space: nowrap;
+      border-right: 1px solid $dark;
+      background: $bg1;
+    }
 
-  &__byteLine {
-    white-space: nowrap;
-    padding-top: 1rem;
-    padding-bottom: 1rem;
-  }
+    &__bytesSection {
+      padding: 1rem;
+      white-space: nowrap;
+      background: $bg2;
+    }
 
-  &__asciiLine {
-    padding-left: 1rem;
-    margin-left: 1rem;
-    padding-top: 1rem;
-    padding-bottom: 1rem;
-    white-space: nowrap;
-    border-left: 1px solid $dark;
+    &__asciiSection {
+      padding: 1rem;
+      background: $bg1;
+      white-space: nowrap;
+      border-left: 1px solid $dark;
+    }
   }
 }

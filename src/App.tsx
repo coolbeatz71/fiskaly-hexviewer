@@ -2,6 +2,8 @@ import React from "react";
 import readFile from "./lib/readFile";
 import HexViewer from "./components/HexViewer";
 
+import "./styles/global.scss";
+
 function App() {
   const [file, setFile] = React.useState<null | string | Uint8Array>(null);
   const updateFileState = async (e: React.FormEvent<HTMLInputElement>) => {
@@ -12,26 +14,29 @@ function App() {
   const renderComponents = () => {
     if (!file) {
       return (
-        <input
-          name="file"
-          type="file"
-          role="button"
-          onInput={updateFileState}
-        />
+        <>
+          <input
+            name="file"
+            type="file"
+            role="button"
+            className="input-file"
+            onInput={updateFileState}
+          />
+          <label htmlFor="file">Choose a file</label>
+        </>
       );
     }
 
     const isBinary = typeof file !== "string";
     return (
       <>
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "center",
-          }}
-        >
-          <span>Loaded {isBinary ? "binary" : "text"} file</span>{" "}
-          <button onClick={() => setFile(null)}>Reset</button>
+        <div className="header">
+          <span className="title">
+            Loaded {isBinary ? "binary" : "text"} file
+          </span>{" "}
+          <button className="button" onClick={() => setFile(null)}>
+            Reset
+          </button>
         </div>
         <HexViewer data={file} />
       </>

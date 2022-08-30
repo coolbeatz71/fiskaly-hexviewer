@@ -1,0 +1,69 @@
+$dark: rgba(
+  $color: #000000,
+  $alpha: 0.1,
+);
+
+$warning: rgba(
+  $color: #f07f34,
+  $alpha: 0.5,
+);
+
+$bg1: rgb(235, 236, 232);
+$bg2: rgba(235, 236, 232, 0.5);
+
+$button: #1462ff;
+
+.App {
+  display: flex;
+  justify-content: center;
+}
+
+.header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: $bg1;
+  margin: 0.5rem;
+  padding: 1rem;
+  border-radius: 4px;
+
+  [class~="title"] {
+    font-size: 13pt;
+    font-weight: 600;
+    margin: 0 1rem;
+  }
+
+  [class~="button"] {
+    padding: 0.5rem 0.6rem;
+    color: white;
+    border: none;
+    background: $button;
+    border-radius: 4px;
+    box-shadow: 0 6px 20px -10px rgba($button, 1);
+    cursor: pointer;
+  }
+}
+
+.input-file {
+  height: 2.8rem;
+  opacity: 0;
+  overflow: hidden;
+  position: absolute;
+  cursor: pointer;
+}
+
+.input-file + label {
+  padding: 0.8rem 2rem;
+  color: white;
+  background-color: $button;
+  display: inline-block;
+  cursor: pointer;
+  border-radius: 4px;
+  box-shadow: 0 6px 20px -10px rgba($button, 1);
+  transition: background ease-in-out 0.2s;
+}
+
+.input-file:focus + label,
+.input-file + label:hover {
+  background: rgba($color: $button, $alpha: 0.8);
+}
