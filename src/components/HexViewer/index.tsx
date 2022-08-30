@@ -69,7 +69,8 @@ const HexViewer: FC<IHexViewerProps> = ({ data }) => {
 
     rows.push(
       <div key={offset} className={styles.viewer__rows__line}>
-        <OffsetSection offset={offset} /> <BytesSection bytes={bytes} />
+        <OffsetSection offset={offset} />
+        <BytesSection bytes={bytes} />
         <AsciiSection
           offset={offset}
           chunks={chunks}
