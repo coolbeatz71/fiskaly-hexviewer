@@ -1,21 +1,37 @@
 import React, { FC, ReactElement, useState, MouseEvent } from "react";
-import { BYTES_PER_ROW } from "../../constants/app";
+import { useMedia } from "react-use";
+import {
+  BYTES_PER_ROW_MD,
+  BYTES_PER_ROW_LG,
+  BYTES_PER_ROW_SM,
+  BYTES_PER_ROW_XS,
+} from "../../constants/app";
+import { ISelectedElement } from "../../interfaces";
 import convertToHEX from "../../lib/convertToHEX";
 import copyToClipboard from "../../lib/copyToClipBoard";
+import AsciiSection from "./AsciiSection";
+import BytesSection from "./BytesSection";
+import OffsetSection from "./OffsetSection";
 
 import styles from "./index.module.scss";
 
-interface IHexViewerProps {
+export interface IHexViewerProps {
   data: string | Uint8Array;
 }
 
-interface ISelectedElement {
-  index: number | null;
-  offset: number | null;
-  value: number | string;
-}
-
 const HexViewer: FC<IHexViewerProps> = ({ data }) => {
+  const isXS = useMedia("(max-width: 567px)");
+  const isSM = useMedia("(min-width: 567px) AND (max-width: 768px)");
+  const isMD = useMedia("(min-width: 768px) AND (max-width: 992px)");
+
+  const BYTES_PER_ROW = isXS
+    ? BYTES_PER_ROW_XS
+    : isSM
+    ? BYTES_PER_ROW_SM
+    : isMD
+    ? BYTES_PER_ROW_MD
+    : BYTES_PER_ROW_LG;
+
   const rows: ReactElement[] = [];
   const [selectedElement, setSelectedElement] = useState<ISelectedElement>({
     index: null,
@@ -51,66 +67,15 @@ const HexViewer: FC<IHexViewerProps> = ({ data }) => {
       );
     });
 
-    const OffsetSection = (
-      <span className={styles.viewer__offsetLine}>
-        {convertToHEX(offset, 8)}
-      </span>
-    );
-
-    const BytesSection = (
-      <div className={styles.viewer__byteLine}>
-        {bytes.slice(0, 8)} {bytes.slice(8)}
-      </div>
-    );
-
-    const AsciiSection = (
-      <div className={styles.viewer__asciiLine}>
-        {chunks.map((byte, i) => {
-          const isSelected =
-            selectedElement.index === i && selectedElement.offset === offset
-              ? styles.viewer__selected
-              : "";
-
-          if (typeof byte === "string") {
-            return (
-              <span
-                key={offset + i}
-                className={isSelected}
-                onClick={(e) => onClickElement(i, offset, e)}
-              >
-                {byte}
-              </span>
-            );
-          }
-
-          if (byte >= 0x20 && byte < 0x7f) {
-            return (
-              <span
-                key={offset + i}
-                className={isSelected}
-                onClick={(e) => onClickElement(i, offset, e)}
-              >
-                {String.fromCharCode(byte)}
-              </span>
-            );
-          }
-
-          return (
-            <span
-              key={offset + i}
-              className={isSelected}
-              onClick={(e) => onClickElement(i, offset, e)}
-            >
-              .
-            </span>
-          );
-        })}{" "}
-      </div>
-    );
-
     rows.push(
       <div key={offset} className={styles.viewer__viewerLine}>
-        {OffsetSection} {BytesSection} {AsciiSection}
+        <OffsetSection offset={offset} /> <BytesSection bytes={bytes} />
+        <AsciiSection
+          offset={offset}
+          chunks={chunks}
+          selectedElement={selectedElement}
+          setSelectedElement={setSelectedElement}
+        />
       </div>
     );
   }
@@ -150,8 +115,8 @@ const HexViewer: FC<IHexViewerProps> = ({ data }) => {
           <span>Copy selected to clipboard</span>
           <button
             style={{
-              marginTop: "10px",
               width: "100px",
+              marginTop: "10px",
               padding: "10px",
             }}
             onClick={() => {
