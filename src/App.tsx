@@ -5,7 +5,9 @@ import HexViewer from "./components/HexViewer";
 import "./styles/global.scss";
 
 function App() {
-  const [file, setFile] = React.useState<null | string | Uint8Array>(null);
+  const [file, setFile] = React.useState<
+    null | string | Uint8Array | Uint16Array
+  >(null);
   const updateFileState = async (e: React.FormEvent<HTMLInputElement>) => {
     const result = await readFile(e);
     setFile(result);
