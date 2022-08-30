@@ -14,7 +14,7 @@ function App() {
   const renderComponents = () => {
     if (!file) {
       return (
-        <>
+        <div className="app__input">
           <input
             name="file"
             type="file"
@@ -23,18 +23,18 @@ function App() {
             onInput={updateFileState}
           />
           <label htmlFor="file">Choose a file</label>
-        </>
+        </div>
       );
     }
 
     const isBinary = typeof file !== "string";
     return (
       <>
-        <div className="header">
-          <span className="title">
+        <div className="app__header">
+          <span className="app__header__title">
             Loaded {isBinary ? "binary" : "text"} file
           </span>{" "}
-          <button className="button" onClick={() => setFile(null)}>
+          <button className="app__header__button" onClick={() => setFile(null)}>
             Reset
           </button>
         </div>
@@ -43,7 +43,7 @@ function App() {
     );
   };
 
-  return <div className="App">{renderComponents()}</div>;
+  return <div className="app">{renderComponents()}</div>;
 }
 
 export default App;

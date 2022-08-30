@@ -69,7 +69,8 @@ const HexViewer: FC<IHexViewerProps> = ({ data }) => {
 
     rows.push(
       <div key={offset} className={styles.viewer__rows__line}>
-        <OffsetSection offset={offset} /> <BytesSection bytes={bytes} />
+        <OffsetSection offset={offset} />
+        <BytesSection bytes={bytes} />
         <AsciiSection
           offset={offset}
           chunks={chunks}
@@ -82,8 +83,7 @@ const HexViewer: FC<IHexViewerProps> = ({ data }) => {
 
   return (
     <pre className={styles.viewer}>
-      <div className={styles.viewer__rows}>{rows}</div>
-      <div className={styles.viewer__footer}>
+      <div className={styles.viewer__head}>
         <button
           onClick={() => {
             const value = selectedElement.value.toString();
@@ -95,6 +95,7 @@ const HexViewer: FC<IHexViewerProps> = ({ data }) => {
           Copy selected to clipboard
         </button>
       </div>
+      <div className={styles.viewer__rows}>{rows}</div>
     </pre>
   );
 };

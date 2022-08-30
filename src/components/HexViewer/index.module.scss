@@ -12,27 +12,27 @@
   overflow-wrap: break-word;
   white-space: pre-wrap;
   word-break: break-all;
-
-  button {
-    padding: 1rem;
-    color: white;
-    border: none;
-    background: $button;
-    border-radius: 8px;
-    box-shadow: 0 6px 20px -10px rgba($button, 1);
-    cursor: pointer;
-  }
-
   &__selected {
     background: $warning;
     padding: 0.2rem;
   }
 
-  &__footer {
+  &__head {
     display: flex;
     justify-content: center;
     width: 100%;
-    margin-top: 1rem;
+    margin-top: 0.5rem;
+    margin-bottom: 1rem;
+
+    button {
+      padding: 1rem;
+      color: white;
+      border: none;
+      background: $button;
+      border-radius: 8px;
+      box-shadow: 0 6px 20px -10px rgba($button, 1);
+      cursor: pointer;
+    }
   }
 
   &__rows {
