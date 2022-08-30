@@ -1,0 +1,71 @@
+@import "../../styles/global.scss";
+
+.viewer {
+  border: 1px solid $dark;
+  border-radius: 3px;
+  padding: 1rem;
+  margin: 0.5rem;
+
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  overflow-wrap: break-word;
+  white-space: pre-wrap;
+  word-break: break-all;
+
+  button {
+    padding: 1rem;
+    color: white;
+    border: none;
+    background: $button;
+    border-radius: 8px;
+    box-shadow: 0 6px 20px -10px rgba($button, 1);
+    cursor: pointer;
+  }
+
+  &__selected {
+    background: $warning;
+    padding: 0.2rem;
+  }
+
+  &__footer {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    margin-top: 1rem;
+  }
+
+  &__rows {
+    margin: 0.5rem;
+    &__line {
+      display: grid;
+      grid-template-columns: 1fr 4fr 2fr;
+      border: 1px solid $dark;
+    }
+
+    &__byte {
+      margin-right: 1rem;
+      white-space: nowrap;
+    }
+
+    &__offsetSection {
+      padding: 1rem;
+      white-space: nowrap;
+      border-right: 1px solid $dark;
+      background: $bg1;
+    }
+
+    &__bytesSection {
+      padding: 1rem;
+      white-space: nowrap;
+      background: $bg2;
+    }
+
+    &__asciiSection {
+      padding: 1rem;
+      background: $bg1;
+      white-space: nowrap;
+      border-left: 1px solid $dark;
+    }
+  }
+}
