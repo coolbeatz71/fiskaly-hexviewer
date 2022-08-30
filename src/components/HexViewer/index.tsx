@@ -1,6 +1,7 @@
 import React, { FC, ReactElement, useState, MouseEvent } from "react";
 import { BYTES_PER_ROW } from "../../constants/app";
 import convertToHEX from "../../lib/convertToHEX";
+import copyToClipboard from "../../lib/copyToClipBoard";
 
 import styles from "./index.module.scss";
 
@@ -64,11 +65,10 @@ const HexViewer: FC<IHexViewerProps> = ({ data }) => {
 
     const AsciiSection = (
       <div className={styles.viewer__asciiLine}>
-        {" "}
         {chunks.map((byte, i) => {
           const isSelected =
             selectedElement.index === i && selectedElement.offset === offset
-              ? styles.selected
+              ? styles.viewer__selected
               : "";
 
           if (typeof byte === "string") {
@@ -118,13 +118,53 @@ const HexViewer: FC<IHexViewerProps> = ({ data }) => {
   return (
     <pre
       style={{
+        display: "flex",
+        justifyContent: "center",
+        flexWrap: "wrap",
         overflowWrap: "break-word",
         whiteSpace: "pre-wrap",
         wordBreak: "break-all",
       }}
     >
-      <span style={{ width: "100%" }}>Here comes the HexViewer</span>
-      <div className={styles.viewerBody}>{rows}</div>
+      <span style={{ width: "100%", textAlign: "center" }}>
+        Here comes the HexViewer
+      </span>
+      <div className={styles.viewer}>{rows}</div>
+      <div
+        style={{
+          display: "flex",
+          width: "100%",
+          marginTop: "20px",
+          justifyContent: "center",
+        }}
+      >
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            marginTop: "20px",
+            marginRight: "20px",
+          }}
+        >
+          <span>Copy selected to clipboard</span>
+          <button
+            style={{
+              marginTop: "10px",
+              width: "100px",
+              padding: "10px",
+            }}
+            onClick={() => {
+              const value = selectedElement.value.toString();
+              copyToClipboard(value).then(() => {
+                alert(`Value copied: ${value}`);
+              });
+            }}
+          >
+            Copy
+          </button>
+        </div>
+      </div>
     </pre>
   );
 };

@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import readFile from "./lib/readFile";
 import HexViewer from "./components/HexViewer";
 
@@ -7,7 +7,7 @@ function App() {
   const updateFileState = async (e: React.FormEvent<HTMLInputElement>) => {
     const result = await readFile(e);
     setFile(result);
-  }
+  };
 
   const renderComponents = () => {
     if (!file) {
@@ -18,27 +18,27 @@ function App() {
           role="button"
           onInput={updateFileState}
         />
-      )
+      );
     }
 
-    const isBinary = typeof file !== 'string';
+    const isBinary = typeof file !== "string";
     return (
       <>
-        <div>
-          <span>Loaded {isBinary ? 'binary' : 'text'} file</span>
-          {' '}
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+          }}
+        >
+          <span>Loaded {isBinary ? "binary" : "text"} file</span>{" "}
           <button onClick={() => setFile(null)}>Reset</button>
         </div>
         <HexViewer data={file} />
       </>
-    )
+    );
   };
 
-  return (
-    <div className="App">
-      {renderComponents()}
-    </div>
-  );
+  return <div className="App">{renderComponents()}</div>;
 }
 
 export default App;
