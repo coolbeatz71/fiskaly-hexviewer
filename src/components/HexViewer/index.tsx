@@ -83,8 +83,7 @@ const HexViewer: FC<IHexViewerProps> = ({ data }) => {
 
   return (
     <pre className={styles.viewer}>
-      <div className={styles.viewer__rows}>{rows}</div>
-      <div className={styles.viewer__footer}>
+      <div className={styles.viewer__head}>
         <button
           onClick={() => {
             const value = selectedElement.value.toString();
@@ -96,6 +95,7 @@ const HexViewer: FC<IHexViewerProps> = ({ data }) => {
           Copy selected to clipboard
         </button>
       </div>
+      <div className={styles.viewer__rows}>{rows}</div>
     </pre>
   );
 };

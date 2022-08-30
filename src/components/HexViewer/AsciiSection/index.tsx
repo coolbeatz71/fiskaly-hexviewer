@@ -1,5 +1,6 @@
 import { FC } from "react";
 import { ISelectedElement } from "../../../interfaces";
+import { AsciiCell } from "../../common/AsciiCell";
 
 import styles from "./../index.module.scss";
 
@@ -26,54 +27,42 @@ const AsciiSection: FC<IAsciiSectionProps> = ({
 
         if (typeof byte === "string") {
           return (
-            <span
+            <AsciiCell
+              index={index}
+              offset={offset}
               key={offset + index}
-              className={isSelected}
-              onClick={(e) =>
-                setSelectedElement({
-                  index,
-                  offset,
-                  value: e.currentTarget.innerText,
-                })
-              }
+              selectedStyle={isSelected}
+              setSelectedElement={setSelectedElement}
             >
               {byte}
-            </span>
+            </AsciiCell>
           );
         }
 
         if (byte >= 0x20 && byte < 0x7f) {
           return (
-            <span
+            <AsciiCell
+              index={index}
+              offset={offset}
               key={offset + index}
-              className={isSelected}
-              onClick={(e) =>
-                setSelectedElement({
-                  index,
-                  offset,
-                  value: e.currentTarget.innerText,
-                })
-              }
+              selectedStyle={isSelected}
+              setSelectedElement={setSelectedElement}
             >
               {String.fromCharCode(byte)}
-            </span>
+            </AsciiCell>
           );
         }
 
         return (
-          <span
+          <AsciiCell
+            index={index}
+            offset={offset}
             key={offset + index}
-            className={isSelected}
-            onClick={(e) =>
-              setSelectedElement({
-                index,
-                offset,
-                value: e.currentTarget.innerText,
-              })
-            }
+            selectedStyle={isSelected}
+            setSelectedElement={setSelectedElement}
           >
             .
-          </span>
+          </AsciiCell>
         );
       })}
     </div>
