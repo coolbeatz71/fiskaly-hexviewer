@@ -25,34 +25,6 @@ const AsciiSection: FC<IAsciiSectionProps> = ({
             ? styles.viewer__selected
             : "";
 
-        if (typeof byte === "string") {
-          return (
-            <AsciiCell
-              index={index}
-              offset={offset}
-              key={offset + index}
-              selectedStyle={isSelected}
-              setSelectedElement={setSelectedElement}
-            >
-              {byte}
-            </AsciiCell>
-          );
-        }
-
-        if (byte >= 0x20 && byte < 0x7f) {
-          return (
-            <AsciiCell
-              index={index}
-              offset={offset}
-              key={offset + index}
-              selectedStyle={isSelected}
-              setSelectedElement={setSelectedElement}
-            >
-              {String.fromCharCode(byte)}
-            </AsciiCell>
-          );
-        }
-
         return (
           <AsciiCell
             index={index}
@@ -60,9 +32,14 @@ const AsciiSection: FC<IAsciiSectionProps> = ({
             key={offset + index}
             selectedStyle={isSelected}
             setSelectedElement={setSelectedElement}
-          >
-            .
-          </AsciiCell>
+            bytes={
+              typeof byte === "string"
+                ? byte
+                : byte >= 0x20 && byte < 0x7f
+                ? String.fromCharCode(byte)
+                : "."
+            }
+          />
         );
       })}
     </div>

@@ -4,17 +4,17 @@ import { ISelectedElement } from "../../../interfaces";
 interface IAsciiCellProps {
   index: number;
   offset: number;
-  children: string;
   selectedStyle: string;
   setSelectedElement: (v: ISelectedElement) => void;
+  bytes: string | number;
 }
 
 export const AsciiCell: FC<IAsciiCellProps> = ({
   index,
   offset,
-  children,
   selectedStyle,
   setSelectedElement,
+  bytes,
 }) => (
   <span
     className={selectedStyle}
@@ -26,6 +26,6 @@ export const AsciiCell: FC<IAsciiCellProps> = ({
       })
     }
   >
-    {children}
+    {bytes}
   </span>
 );
